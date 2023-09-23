@@ -18,7 +18,6 @@ describe('Send Notification', () => {
       recipientId: 'example-recipient-id',
     });
 
-    console.log(notifications);
     expect(notifications).toHaveLength(1);
   });
 });

@@ -1,7 +1,6 @@
 import { InMemoryNotificationsRepository } from '@test/repositories/in-memory-notifications-repository';
-import { Notification } from '@app/entities/notification';
-import { Content } from '@app/entities/content';
 import { CountRecipientNotification } from './count-recipient-notifications';
+import { makeNotification } from '@test/factories/notification-factory';
 
 describe('Count Recipient Notifications', () => {
   it('should be able to cancel a notification', async () => {
@@ -11,30 +10,9 @@ describe('Count Recipient Notifications', () => {
     );
 
     const recipientId = 'recipient-1';
-
-    await NotificationsRepository.create(
-      new Notification({
-        category: 'Market',
-        content: new Content('You product was founded'),
-        recipientId,
-      }),
-    );
-
-    await NotificationsRepository.create(
-      new Notification({
-        category: 'Market',
-        content: new Content('You product was founded'),
-        recipientId,
-      }),
-    );
-
-    await NotificationsRepository.create(
-      new Notification({
-        category: 'Market',
-        content: new Content('You product was founded'),
-        recipientId: 'recipient-2',
-      }),
-    );
+    await NotificationsRepository.create(makeNotification({ recipientId }));
+    await NotificationsRepository.create(makeNotification({ recipientId }));
+    await NotificationsRepository.create(makeNotification());
 
     const { count } = await countNotification.execute({
       recipientId,
